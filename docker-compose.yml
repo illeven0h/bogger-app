@@ -1,23 +1,26 @@
-version: '3.8'
-
+version: "3"
 services:
-  blogger-app:
-    build: .
-    container_name: blogger-app
-    ports:
-      - "3000:3000"
-    environment:
-      - MONGO_URL=mongodb://mongo:27017/blogdb
-    depends_on:
-      - mongo
-
   mongo:
     image: mongo:6
-    container_name: mongo
+    restart: always
+    volumes:
+      - mongo_data:/data/db
     ports:
       - "27017:27017"
+
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - MONGO_URI=mongodb://mongo:27017/blogify_db
+    depends_on:
+      - mongo
     volumes:
-      - mongo-data:/data/db
+      - .:/app
+    command: node app.js
 
 volumes:
-  mongo-data:
+  mongo_data:
+

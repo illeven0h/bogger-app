@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  blogger-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: blogger-app
+    restart: unless-stopped
+    ports:
+      - "9090:3000"   # maps container port 3000 to host port 9090
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/bloggerdb
+    depends_on:
+      - mongo
+    volumes:
+      - ./:/app
+
+volumes:
+  mongo-data:
