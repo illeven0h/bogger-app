@@ -3,7 +3,7 @@ FROM node:18
 # Create app directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package.json and package-lock.json yeah 
 COPY package*.json ./
 
 # Install dependencies
