@@ -12,8 +12,8 @@ services:
 
   blogger-app:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: jenkins-deploy/Dockerfile
     container_name: blogger-app
     restart: unless-stopped
     ports:
@@ -23,7 +23,7 @@ services:
     depends_on:
       - mongo
     volumes:
-      - ./:/app
+      - ../:/app
 
 volumes:
   mongo-data:
