@@ -17,7 +17,7 @@ services:
     container_name: blogger-app
     restart: unless-stopped
     ports:
-      - "9090:3000"   # maps container port 3000 to host port 9090
+      - "9090:8000"
     environment:
       - MONGO_URI=mongodb://mongo:27017/bloggerdb
     depends_on:
