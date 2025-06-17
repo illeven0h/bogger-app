@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                // Jenkins automatically clones the repo using the GitHub webhook trigger
+                echo 'Repository cloned successfully.'
+            }
+        }
+
+        stage('Run Selenium Tests in Docker') {
+            steps {
+                script {
+                    echo 'Building Docker image for Selenium test cases...'
+                    sh 'docker build -t selenium-tests ./selenium-tests'
+
+                    echo 'Running Selenium test container...'
+                    sh 'docker run --rm selenium-tests'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up...'
+            // Add cleanup logic here if needed
+        }
+    }
+}
